@@ -30,7 +30,7 @@ The system workflow is designed to convert audio input into a meaningful respons
 ### Project Structure
 - `main.py`: Flask application file that sets up the server, processes incoming audio files, and serves responses.
 - `Chatbot_using_Whisper.ipynb`: Jupyter Notebook for testing the pipeline with individual audio files and direct model interactions.
-- `static` and `templates`: Contain HTML and CSS for the app's user interface.
+- `templates`: Contain HTML for the app's user interface.
 
 ### Installation
 
