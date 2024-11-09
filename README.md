@@ -1,35 +1,103 @@
-# Audio-Based Q&A Chatbot with Langchain and Hugging Face
+# Audio-based Question-Answering System
 
-This project is an audio-based Question and Answer (Q&A) chatbot. Users can submit a spoken question in the form of an audio file, and the system will convert the audio into text, generate a response using a language model, and then convert the response back into audio for playback. It leverages the following technologies:
-- **Langchain** for managing the language model prompt and response generation.
-- **Hugging Face Transformers** for automatic speech recognition and text-based language processing.
-- **Google Text-to-Speech (gTTS)** for converting the response text back into audio.
+This project is a hybrid system that captures audio input, processes it to generate a text transcription, analyzes the transcription, and produces an appropriate response using an LLM (Llama model) integrated with Langchain. The final response is then converted back to speech. The project involves a Flask web app for easy deployment and an accompanying notebook for testing the pipeline.
 
-This chatbot is designed for seamless audio input and output, providing an interactive, voice-based experience.
+### Features
+- **Audio to Text Conversion**: Uses OpenAI's Whisper model for high-quality speech-to-text transcription.
+- **Text-based Question Answering**: Leverages the Langchain integration with the Hugging Face Llama model to provide intelligent responses.
+- **Text to Speech Response**: Converts the response back into audio using Google Text-to-Speech (gTTS).
 
-## Project Workflow
+### Technologies Used
+- **Flask**: For serving the web application.
+- **Langchain** and **Hugging Face Hub**: To enable natural language processing and responses.
+- **gTTS**: For converting text responses to speech audio files.
+- **Librosa** and **pydub**: For audio processing and silence detection.
+- **OpenAI Whisper**: Used for converting audio input to text.
 
-The data workflow is organized into six steps, converting an audio query to a generated audio response as follows:
+### Workflow
 
-### Workflow Overview
+The system workflow is designed to convert audio input into a meaningful response and play it back to the user:
 
-1. **Audio Input**: 
-   - User uploads an audio file containing a spoken question.
+![Untitled Diagram](https://github.com/user-attachments/assets/7ff68eb4-778d-4534-a54f-73658ea1ec99)
 
-2. **Audio to Text Conversion**: 
-   - The audio file is transcribed into text using OpenAI's Whisper model (`openai/whisper-small.en`) from Hugging Face. 
 
-3. **Question Extraction**:
-   - The transcribed text (question) is extracted for further processing.
+1. **Audio Input** (MP3/WAV): User provides an audio file containing the question.
+2. **Whisper Model for Transcription**: Converts audio to text, extracting the question.
+3. **Llama Model with Langchain for Response**: Uses the extracted question to generate an intelligent response.
+4. **Google Text-to-Speech (gTTS)**: Converts the response back to audio.
+5. **Audio Playback**: Provides an audio response to the user.
 
-4. **Model Response Generation**:
-   - The extracted question text is passed to a language model (Llama 3.2 3B model), where a response is generated using Langchain’s `LLMChain`.
+### Project Structure
+- `app.py`: Flask application file that sets up the server, processes incoming audio files, and serves responses.
+- `notebook.ipynb`: Jupyter Notebook for testing the pipeline with individual audio files and direct model interactions.
+- `static` and `templates`: Contain HTML and CSS for the app's user interface.
 
-5. **Text to Speech Conversion**:
-   - The model's response text is converted into speech using Google Text-to-Speech (gTTS).
+### Installation
 
-6. **Response Playback**:
-   - The generated response is saved as an audio file and played back to the user.
+1. **Clone the Repository**:
+   ```bash
+   git clone <repo_url>
+   cd <repo_name>
+   ```
 
-### Detailed Workflow Diagram
+2. **Install Required Packages**:
+   ```bash
+   pip install flask langchain langchain_community transformers gtts librosa pydub
+   ```
 
+3. **Download Necessary Models**:
+   - Whisper model (`openai/whisper-small.en`)
+   - Llama model (`meta-llama/Llama-3.2-3B-Instruct`)
+   - Ensure you have a Hugging Face API token.
+
+4. **Run Flask App**:
+   ```bash
+   python app.py
+   ```
+
+5. **Notebook Execution**: 
+   Use the notebook (`notebook.ipynb`) to test the pipeline end-to-end in an interactive environment.
+
+### Usage
+
+1. **Web Application**:
+   - Navigate to `http://127.0.0.1:5000/` in your browser.
+   - Upload an audio file to ask a question, and the app will provide an audio response.
+
+2. **Notebook Workflow**:
+   - Import necessary libraries and initialize models.
+   - Input your audio file path, convert it to text, generate a response using the model, and convert the text back to an audio file.
+
+### Example Walkthrough
+
+1. **Audio Input**: Provide an audio file containing your question.
+2. **Text Conversion**: `Whisper` transcribes the audio to text.
+3. **Response Generation**: `Llama` provides a response based on the transcription.
+4. **Text to Speech**: `gTTS` converts the response to audio.
+
+### Code Explanation
+
+#### Flask Web App (`app.py`)
+- **Route Handlers**:
+  - `/process_audio`: Accepts audio files, processes them to generate responses.
+  - `add_header`: Caches and response handling.
+- **Audio Processing**:
+  - Uses `pydub` to handle audio files, Whisper for transcription, and Langchain LLM for responses.
+  
+#### Notebook (`notebook.ipynb`)
+- **Speech Recognition**: Uses Whisper model to transcribe audio files.
+- **Language Model**: Langchain integration with the Llama model for question-answering.
+- **Text to Speech**: `gTTS` to generate audio files for responses.
+
+### Configuration
+- **Hugging Face API**: Set up your `huggingface_api_token` in the code for secure model access.
+- **Model Configurations**: Adjust parameters like `temperature` and `max_new_tokens` for custom response generation.
+
+### Acknowledgements
+- **Hugging Face Hub** and **Langchain Community** for providing robust NLP pipelines.
+- **Google Text-to-Speech (gTTS)** for simple text-to-speech conversion.
+- **OpenAI** for Whisper model providing high-quality speech recognition.
+
+### License
+This project is licensed under the MIT License.
+```
