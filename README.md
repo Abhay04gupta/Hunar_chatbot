@@ -28,8 +28,8 @@ The system workflow is designed to convert audio input into a meaningful respons
 5. **Audio Playback**: Provides an audio response to the user.
 
 ### Project Structure
-- `app.py`: Flask application file that sets up the server, processes incoming audio files, and serves responses.
-- `notebook.ipynb`: Jupyter Notebook for testing the pipeline with individual audio files and direct model interactions.
+- `main.py`: Flask application file that sets up the server, processes incoming audio files, and serves responses.
+- `Chatbot_using_Whisper.ipynb`: Jupyter Notebook for testing the pipeline with individual audio files and direct model interactions.
 - `static` and `templates`: Contain HTML and CSS for the app's user interface.
 
 ### Installation
@@ -56,7 +56,7 @@ The system workflow is designed to convert audio input into a meaningful respons
    ```
 
 5. **Notebook Execution**: 
-   Use the notebook (`notebook.ipynb`) to test the pipeline end-to-end in an interactive environment.
+   Use the notebook (`Chatbot_using_Whisper.ipynb`) to test the pipeline end-to-end in an interactive environment.
 
 ### Usage
 
@@ -84,7 +84,7 @@ The system workflow is designed to convert audio input into a meaningful respons
 - **Audio Processing**:
   - Uses `pydub` to handle audio files, Whisper for transcription, and Langchain LLM for responses.
   
-#### Notebook (`notebook.ipynb`)
+#### Notebook (`Chatbot_using_Whisper.ipynb`)
 - **Speech Recognition**: Uses Whisper model to transcribe audio files.
 - **Language Model**: Langchain integration with the Llama model for question-answering.
 - **Text to Speech**: `gTTS` to generate audio files for responses.
